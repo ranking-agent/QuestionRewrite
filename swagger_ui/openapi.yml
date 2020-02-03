@@ -1,0 +1,38 @@
+openapi: 3.0.2
+info:
+  title: Question Rewrite (placeholder) - A Swagger UI/web service
+  description: 'A Swagger UI/web service interface (placeholder) for the Question Rewrite service'
+  version: '1.0.0'
+  contact:
+    email: whomever@renci.org
+  termsOfService: http://robokop.renci.org:7055/tos?service_long=Redis-REST+with+Referencing&provider_long=the+Translator+Consortium
+  license:
+    name: MIT
+    url: 'https://opensource.org/licenses/MIT'
+tags:
+  - name: QRW
+paths:
+  /get:
+    get:
+      tags:
+        - QRW
+      summary: 'Get value(s) for something'
+      description: ''
+      parameters:
+        - in: query
+          name: Some lookup item
+          schema:
+            type: array
+            items:
+              type: string
+            example:
+              -  Unknown
+      responses:
+        '200':
+          description: Results
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  request: response
