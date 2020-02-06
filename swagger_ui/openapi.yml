@@ -16,7 +16,7 @@ paths:
     get:
       tags:
         - QRW
-      summary: 'Get validity of query in JSON format'
+      summary: 'Get questions related to a question. question validated against Translator Interchange format'
       description: ''
       parameters:
         - in: query
@@ -24,7 +24,7 @@ paths:
           schema:
             type: json
             example:
-              -  {}
+              -  '{}'
       responses:
         '200':
           description: Results
