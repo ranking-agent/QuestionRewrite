@@ -21,7 +21,7 @@ app.blueprint(apidocs_blueprint)
 async def query_handler(request):
     """ Handler for question rewrite operations. """
 
-    # get the localtion of the Translator specification file
+    # get the location of the Translator specification file
     dir_path = os.path.dirname(os.path.realpath(__file__))
 
     # load the Translator specification
