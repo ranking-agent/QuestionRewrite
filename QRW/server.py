@@ -16,115 +16,6 @@ app.config.ACCESS_LOG = False
 # init the app using the paramters defined in
 app.blueprint(apidocs_blueprint)
 
-"""
-a couple json segments to test the request and response
-
-request:
-    
-{
-  "machine_question": {
-    "edges": [
-      {
-        "source_id": "n0",
-        "target_id": "n1"
-      },
-      {
-        "source_id": "n1",
-        "target_id": "n2"
-      }
-    ],
-    "nodes": [
-      {
-        "curie": "MONDO:0005737",
-        "id": "n0",
-        "type": "disease"
-      },
-      {
-        "id": "n1",
-        "type": "gene"
-      },
-      {
-        "id": "n2",
-        "type": "genetic_condition"
-      }
-    ]
-  },
-  "name": "the name",
-  "natural_question": "What genetic conditions might provide protection against Ebola?",
-  "notes": "#ebola #q1"
-}
-                
-response:
-
-[
-    {
-      "machine_question": {
-        "edges": [
-          {
-            "source_id": "n0",
-            "target_id": "n1"
-          },
-          {
-            "source_id": "n1",
-            "target_id": "n2"
-          }
-        ],
-        "nodes": [
-          {
-            "curie": "MONDO:0005737",
-            "id": "n0",
-            "type": "disease"
-          },
-          {
-            "id": "n1",
-            "type": "gene"
-          },
-          {
-            "id": "n2",
-            "type": "genetic_condition"
-          }
-        ]
-      },
-      "name": "the name",
-      "natural_question": "What genetic conditions might provide protection against Ebola?",
-      "notes": "#ebola #q1"
-    },
-    {
-      "machine_question": {
-        "edges": [
-          {
-            "source_id": "n0",
-            "target_id": "n1"
-          },
-          {
-            "source_id": "n1",
-            "target_id": "n2"
-          }
-        ],
-        "nodes": [
-          {
-            "curie": "MONDO:0005737",
-            "id": "n0",
-            "type": "disease"
-          },
-          {
-            "id": "n1",
-            "type": "gene"
-          },
-          {
-            "id": "n2",
-            "type": "genetic_condition"
-          }
-        ]
-      },
-      "name": "the name",
-      "natural_question": "What genetic conditions might provide protection against Ebola?",
-      "notes": "#ebola #q1"
-    }
-]
-
-"""
-
 
 @app.post('/query')
 async def query_handler(request):
@@ -138,44 +29,37 @@ async def query_handler(request):
         spec = yaml.load(f, Loader=yaml.SafeLoader)
 
     # load the query specification, first get the question node
-    to_validate = spec["components"]["schemas"]["Question"]
+    validate_with = spec["components"]["schemas"]["Question"]
 
     # then get the components in their own array so the relative references are found
-    to_validate["components"] = spec["components"]
+    validate_with["components"] = spec["components"]
 
     # remove the question node because we already have it at the top
-    to_validate["components"].pop("Question", None)
+    validate_with["components"].pop("Question", None)
 
     try:
         # load the input into a json object
         incoming = json.loads(request.body)
 
         # validate the incoming json against the spec
-        jsonschema.validate(instance=incoming, schema=to_validate)
+        jsonschema.validate(instance=incoming, schema=validate_with)
 
-    # all validation errors are manifested as a thrown exception
+    # all JSON validation errors are manifested as a thrown exception
     except jsonschema.exceptions.ValidationError as error:
         # print (f"ERROR: {str(error)}")
-        return response.json({'Query_failed_validation_message': str(error)}, status=400)
+        return response.json({'Question failed validation. Message': str(error)}, status=400)
 
-    """
-    Commented out for now.
+    # TODO: do the real work here. get a list of rewritten questions related to the requested one
+    query_rewritten = [incoming, incoming]
+
     try:
-        # do the real work here. get a list of rewritten questions related to the requested one
-        query_rewritten = json.loads('{}')
+        # validate each response item against the spec
+        for item in query_rewritten:
+            jsonschema.validate(item, validate_with)
 
-        # load the query response specification
-        rewrite_validate = spec["components"]["schemas"]["Result"]
-        
-        # validate what is to be returned to insure it is also conforms to the Translator spec
-        jsonschema.validate(request.json, spec)
-
-        # if we are here the response validated properly
-        return response.json("Success", status=200)
-        
-    # all validation errors are manifested as a thrown exception
+    # all JSON validation errors are manifested as a thrown exception
     except jsonschema.exceptions.ValidationError as error:
-        return response.json({'Response_failed_validation_message': str(error)}, status=400)
-    """
+        return response.json({'Response failed validation. Message': str(error)}, status=400)
+
     # if we are here the response validated properly
-    return response.json("Success", status=200)
+    return response.json(query_rewritten, status=200)
