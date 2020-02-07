@@ -22,7 +22,6 @@ paths:
               schema:
                 "$ref": "#/definitions/Question"
         description: A question graph
-        name: question
         required: true
       responses:
         '200':
