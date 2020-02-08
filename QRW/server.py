@@ -3,12 +3,14 @@ import jsonschema
 import yaml
 import json
 from sanic import Sanic, response
+from sanic.request import Request
+
 from apidocs import bp as apidocs_blueprint
 
 """ Sanic server for Question Rewrite - A Swagger UI/web service. """
 
 # initialize this web app
-app = Sanic("Question rewrite")
+app: Sanic = Sanic("Question rewrite")
 
 # suppress access logging
 app.config.ACCESS_LOG = False
@@ -18,18 +20,18 @@ app.blueprint(apidocs_blueprint)
 
 
 @app.post('/query')
-async def query_handler(request):
+async def query_handler(request: Request) -> json:
     """ Handler for question rewrite operations. """
 
     # get the location of the Translator specification file
-    dir_path = os.path.dirname(os.path.realpath(__file__))
+    dir_path: str = os.path.dirname(os.path.realpath(__file__))
 
     # load the Translator specification
     with open(os.path.join(dir_path, 'translator_interchange_0.9.0.yaml')) as f:
-        spec = yaml.load(f, Loader=yaml.SafeLoader)
+        spec: dict = yaml.load(f, Loader=yaml.SafeLoader)
 
     # load the query specification, first get the question node
-    validate_with = spec["components"]["schemas"]["Question"]
+    validate_with: dict = spec["components"]["schemas"]["Question"]
 
     # then get the components in their own array so the relative references are found
     validate_with["components"] = spec["components"]
@@ -39,7 +41,7 @@ async def query_handler(request):
 
     try:
         # load the input into a json object
-        incoming = json.loads(request.body)
+        incoming: dict = json.loads(request.body)
 
         # validate the incoming json against the spec
         jsonschema.validate(instance=incoming, schema=validate_with)
@@ -50,7 +52,7 @@ async def query_handler(request):
         return response.json({'Question failed validation. Message': str(error)}, status=400)
 
     # TODO: do the real work here. get a list of rewritten questions related to the requested one
-    query_rewritten = [incoming, incoming]
+    query_rewritten: list = [incoming, incoming]
 
     try:
         # validate each response item against the spec
