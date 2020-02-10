@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """ Run Question rewrite. """
 import argparse
 from QRW.server import app
