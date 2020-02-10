@@ -35,7 +35,7 @@ items:
     name: qrw-web-service
   spec:
     type: LoadBalancer
-    loadBalancerIP: 172.25.16.141
+    loadBalancerIP: <IP>
     selector:
       service: qrw-web-service
     ports:
