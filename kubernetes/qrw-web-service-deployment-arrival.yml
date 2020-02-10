@@ -34,7 +34,8 @@ items:
       service: qrw-web-service
     name: qrw-web-service
   spec:
-    type: NodePort
+    type: LoadBalancer
+    loadBalancerIP: 172.25.16.141
     selector:
       service: qrw-web-service
     ports:
