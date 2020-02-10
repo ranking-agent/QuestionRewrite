@@ -5,6 +5,5 @@ services:
     image: qrw
     build:
         context: .
-    environment:
-      ports:
-        - "6380:6380"
+    ports:
+      - "6380:6380"
