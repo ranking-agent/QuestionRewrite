@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qrw-web-deployment
+  labels:
+    service: qrw-web
+    app: qrw-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: qrw-web
+  template:
+    metadata:
+      labels:
+        app: qrw-web
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: qrw-web
+        image: renciorg/qrw
+        ports:
+          - containerPort: 6480
+            name: http
+      restartPolicy: Always

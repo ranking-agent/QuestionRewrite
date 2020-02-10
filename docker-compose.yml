@@ -1,0 +1,11 @@
+version: "3"
+services:
+  qrw:
+    container_name: qrw
+    image: qrw
+    build:
+        context: .
+    environment:
+      ports:
+        - "80:6480"
+        - "443:6443"
