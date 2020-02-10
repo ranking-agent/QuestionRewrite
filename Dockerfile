@@ -1,4 +1,4 @@
-FROM scratch
+FROM python:3.8.1-buster
 
 # update the container
 RUN apt-get update
