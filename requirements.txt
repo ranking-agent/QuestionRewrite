@@ -1,8 +1,8 @@
-jinja2
+Jinja2
 jsonschema
 sanic==19.9.0
-swagger_ui_bundle
+swagger-ui-bundle
 pyyaml
 argparse
 setuptools
-json
+json5
