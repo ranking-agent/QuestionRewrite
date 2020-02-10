@@ -8,8 +8,6 @@ WORKDIR /repo
 
 RUN git clone https://github.com/TranslatorIIPrototypes/QuestionRewrite.git
 
-RUN git checkout Phil_QRW
-
 WORKDIR /repo/QuestionRewrite
 
 # install all required packages
