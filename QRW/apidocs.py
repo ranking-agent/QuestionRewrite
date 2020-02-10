@@ -31,6 +31,6 @@ bp.static('/openapi.yml', 'swagger_ui/openapi.yml')
 
 # define the redirected entry point
 @bp.route('')
-def redirect() -> Response:
+def redirect(request: Request) -> Response:
     """ Redirect to url with trailing slash. """
     return response.redirect('/apidocs/')
