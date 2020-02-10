@@ -16,4 +16,4 @@ RUN pip install -r requirements.txt
 RUN pip install -e .
 
 # start the service entry point
-ENTRYPOINT ["main.py"]
+ENTRYPOINT ["python3.8 main.py"]
