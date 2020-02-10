@@ -13,7 +13,7 @@ WORKDIR /repo/QuestionRewrite
 # install all required packages
 RUN pip install -r requirements.txt
 
-RUN pip install -e .
+# RUN pip install -e .
 
 # start the service entry point
-ENTRYPOINT ["main.py"]
+ENTRYPOINT ["/usr/bin/python3 ./main.py"]
