@@ -1,4 +1,4 @@
-LABEL maintainer="powen@renci.org"
+FROM scratch
 
 # update the container
 RUN apt-get update
