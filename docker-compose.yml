@@ -7,5 +7,4 @@ services:
         context: .
     environment:
       ports:
-        - "80:6480"
-        - "443:6443"
+        - "6380:6380"
