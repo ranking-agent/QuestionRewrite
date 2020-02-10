@@ -2,7 +2,7 @@ jinja2
 jsonschema
 sanic==19.9.0
 swagger_ui_bundle
-yaml
+pyyaml
 argparse
 setuptools
 json
