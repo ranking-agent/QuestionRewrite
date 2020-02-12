@@ -6,15 +6,13 @@ A service that accepts a properly formatted Robokop-like question and returns si
 
 ## Deployment
 
-Please download and implement the Docker container located in the Docker hub repo: renciorg/qrw. 
+Please download and implement the Docker container located in the Docker hub repo: renciorg\qrw. 
 
-Kubernetes deployment files are available in the <code base>/kubernetes directory.
+Kubernetes deployment files are available in the \kubernetes directory.
 
 ### Local environment
 
 Note: This environment expects Python version 3.8.
-
-Download the git repo: https://github.com/TranslatorIIPrototypes/QuestionRewrite.git
 
 Install required packages: pip install -r requirements.txt
 
