@@ -27,4 +27,4 @@ docker-compose up -d
 ```
 ## Usage
 
-<http://<hostname or IP>:6380/apidocs>
+http://"host name or IP":"port"/apidocs
