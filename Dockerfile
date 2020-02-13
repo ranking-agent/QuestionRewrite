@@ -1,4 +1,8 @@
+# base this container on python 3.8
 FROM python:3.8.1-buster
+
+# get some credit
+LABEL maintainer="powen@renci.org"
 
 # update the container
 RUN apt-get update
@@ -17,6 +21,9 @@ WORKDIR /repo/QuestionRewrite
 
 # install all required packages
 RUN pip install -r requirements.txt
+
+# expose the default port
+EXPOSE 6380
 
 # start the service entry point
 ENTRYPOINT ["python", "main.py"]
