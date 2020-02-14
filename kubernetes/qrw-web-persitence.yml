@@ -11,7 +11,7 @@ items:
     capacity:
       storage: 5Gi
     hostPath:
-      path: "/c/Users/powen/PycharmProjects/qrw-web-data"
+      path: "/d/dvols/qrw/data"
     persistentVolumeReclaimPolicy: Retain
     storageClassName: qrw-web-data-pv
 
