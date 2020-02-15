@@ -2,7 +2,7 @@
 
 A Swagger UI/web service interface for the Question Rewrite service.
 
-A service that accepts a properly formatted Robokop-like question and returns similar questions to the user.
+A service that accepts a properly formatted ReasonerStd question and returns similar questions to the user.
 
 ## Deployment
 
