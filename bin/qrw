@@ -32,7 +32,7 @@ export QRW=$QRW_ROOT/QRW
 ## Run tests.
 ##
 test () {
-    pytest --cov=qrw $QRW/tests $*
+    pytest --cov=qrw $QRW/unittests $*
 }
 
 $*
