@@ -1,0 +1,27 @@
+dist: xenial
+
+language: python
+python:
+  - "3.8"
+
+notifications:
+  email:
+    - powen@renci.org
+
+# command to install dependencies
+install:
+  - pip install -r QuestionRewrite/requirements.txt
+
+sudo:
+  false
+
+env:
+  global:
+    - PATH=$PWD/bin:$PATH
+
+# command to run tests
+script:
+  - qrw test
+
+after_success:
+  - coveralls
