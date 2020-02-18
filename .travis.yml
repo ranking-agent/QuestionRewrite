@@ -15,12 +15,12 @@ install:
 env:
   global:
     - PATH=$PWD/bin:$PATH
-#    - PYTHONPATH=$PWD/QRW
+    - PYTHONPATH=$PWD/QRW
 
 # command to run tests
 script:
-#  - pytest -p no:warnings QRW/unittests
-  - qrw test
+  - pytest -p no:warnings QRW/unittests
+#  - qrw test
 
 after_success:
   - coveralls
