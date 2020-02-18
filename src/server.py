@@ -4,7 +4,6 @@ import yaml
 import json
 from sanic import Sanic, response
 from sanic.request import Request
-
 from src.apidocs import bp as apidocs_blueprint
 
 """ Sanic server for Question Rewrite - A Swagger UI/web service. """
