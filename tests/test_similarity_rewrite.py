@@ -1,5 +1,5 @@
 import pytest
-import QRW.similarity_rewrite as rw
+import src.similarity_rewrite as rw
 from collections import defaultdict
 
 def write_testq(nodelist,predlist,directionlist):
