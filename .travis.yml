@@ -10,10 +10,7 @@ notifications:
 
 # command to install dependencies
 install:
-  - pip install -r QuestionRewrite/requirements.txt
-
-sudo:
-  false
+  - pip install -r requirements.txt
 
 env:
   global:
@@ -21,7 +18,7 @@ env:
 
 # command to run tests
 script:
-  - qrw test
+  - pytest -p no:warnings QRW/unittests
 
 after_success:
   - coveralls
