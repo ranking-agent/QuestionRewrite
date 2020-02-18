@@ -31,7 +31,7 @@ paths:
                 type: array
                 items:
                   "$ref": "#/definitions/Question"
-          description: Returns an array of relevant questions
+          description: 'Example: Returns an array of relevant questions'
       summary: 'Get questions related to a question.'
 definitions:
   QEdge:
