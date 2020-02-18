@@ -18,7 +18,7 @@ env:
 
 # command to run tests
 script:
-  - pytest -p no:warnings QRW/unittests
+  - pytest -p no:warnings QRW/tests
 
 after_success:
   - coveralls
