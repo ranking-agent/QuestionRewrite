@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/TranslatorIIPrototypes/QuestionRewrite.svg?branch=master)](https://travis-ci.com/TranslatorIIPrototypes/QuestionRewrite)
+
 # QuestionRewrite
 
 A Swagger UI/web service interface for the Question Rewrite service.
