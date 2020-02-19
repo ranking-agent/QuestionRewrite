@@ -1,8 +1,7 @@
-import pytest
 import src.similarity_rewrite as rw
 from collections import defaultdict
 
-from QRW.unittests.common import write_testq
+from tests.common import write_testq
 
 def test_simple_sim():
     tq = write_testq(['gene', 'chemical_substance', 'disease'],

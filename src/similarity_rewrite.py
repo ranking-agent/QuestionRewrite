@@ -1,6 +1,6 @@
 from copy import deepcopy
 
-from QRW.graph_util import get_node, get_edge
+from src.graph_util import get_node, get_edge
 
 
 def similarity_expand(querygraph,expansion_types=['chemical_substance']):

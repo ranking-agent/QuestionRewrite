@@ -1,6 +1,4 @@
-import pytest
-import QRW.edge_expand_rewrite as rw
-from collections import defaultdict
+import src.edge_expand_rewrite as rw
 
 def write_testq(nodelist,predlist,directionlist):
     querygraph = {}

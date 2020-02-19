@@ -1,5 +1,5 @@
 from copy import deepcopy
-from QRW.graph_util import get_edge, get_source_type, get_target_type
+from src.graph_util import get_edge, get_source_type, get_target_type
 
 def rewrite_edge_expand(machine_question, expanders=['amie_v1'], depth =1):
     """Given a machine question, apply edge expansions from a set of expanders.
