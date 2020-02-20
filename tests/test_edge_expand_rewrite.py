@@ -34,3 +34,11 @@ def test_edge_expand():
     for nq in nqs:
         assert len(nq['nodes']) == 3
         assert len(nq['edges']) == 2
+
+def test_edge_lookup():
+    #Maybe replace with a test db?
+    expander = 'amie_v1.db'
+    source_type = 'chemical_substance'
+    edge_type='treats'
+    target_type='disease'
+    r = rw.lookup_edge_expansions(expander, source_type, edge_type, target_type)

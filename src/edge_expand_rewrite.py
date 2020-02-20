@@ -1,4 +1,6 @@
 from copy import deepcopy
+import sqlite3
+import os
 from src.graph_util import get_edge, get_source_type, get_target_type
 
 def rewrite_edge_expand(machine_question, expanders=['amie_v1'], depth =1):
@@ -29,4 +31,13 @@ def edge_expand(input_query, edge_id, expander):
     return [output_query]
 
 def lookup_edge_expansions(expander, source_type, edge_type, target_type):
+    """Given a predicate going from type a to type b, find the edges that you can expand or
+    replace it with, along with their statistics"""
+    apath = os.path.dirname(os.path.abspath(__file__))
+    with sqlite3.connect(f'{apath}/{expander}') as conn:
+        conn.execute('SELECT expansions, pcaconfidence, headcoverage from expansions where source_type=? and edge_type=? and target_type=?',
+                     (source_type, edge_type, target_type))
+        results = conn.fetchall()
+        print(len(results))
+        print(results[0]['expansions'])
     return []
