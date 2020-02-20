@@ -15,7 +15,7 @@ def write_testq(nodelist,predlist,directionlist):
     querygraph['edges'] = edges
     return querygraph
 
-def test_simple_exp():
+def xtest_simple_exp():
     tq = write_testq(['chemical_substance','disease'], ['treats'], [True])
     print(tq)
     nqs = rw.rewrite_edge_expand(tq)
@@ -29,7 +29,7 @@ def test_simple_exp():
 def test_edge_expand():
     tq = write_testq(['chemical_substance','disease'], ['treats'], [True])
     #amie_v1 isn't usually exposed, this is just for the test.
-    nqs = rw.edge_expand(tq,'edge_0','amie_v1')
+    nqs = rw.edge_expand(tq,'edge_0','amie_v1.db')
     assert len(nqs) > 3
     for nq in nqs:
         assert len(nq['nodes']) == 3
@@ -41,4 +41,5 @@ def test_edge_lookup():
     source_type = 'chemical_substance'
     edge_type='treats'
     target_type='disease'
-    r = rw.lookup_edge_expansions(expander, source_type, edge_type, target_type)
+    rs = rw.lookup_edge_expansions(expander, source_type, edge_type, target_type)
+    assert len(rs) > 50

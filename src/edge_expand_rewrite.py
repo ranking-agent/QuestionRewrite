@@ -34,10 +34,11 @@ def lookup_edge_expansions(expander, source_type, edge_type, target_type):
     """Given a predicate going from type a to type b, find the edges that you can expand or
     replace it with, along with their statistics"""
     apath = os.path.dirname(os.path.abspath(__file__))
-    with sqlite3.connect(f'{apath}/{expander}') as conn:
-        conn.execute('SELECT expansions, pcaconfidence, headcoverage from expansions where source_type=? and edge_type=? and target_type=?',
+    fname = f'{apath}/{expander}'
+    print(fname)
+    with sqlite3.connect(fname) as conn:
+        conn.row_factory = sqlite3.Row
+        cur = conn.execute('SELECT expansions, pcaconfidence, headcoverage from expansions where source_type=? and edge_type=? and target_type=?',
                      (source_type, edge_type, target_type))
-        results = conn.fetchall()
-        print(len(results))
-        print(results[0]['expansions'])
-    return []
+        results = cur.fetchall()
+    return results
