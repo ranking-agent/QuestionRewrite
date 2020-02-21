@@ -1,24 +1,10 @@
-import pytest
 import src.similarity_rewrite as rw
 from collections import defaultdict
 
-def write_testq(nodelist,predlist,directionlist):
-    querygraph = {}
-    nodes = []
-    edges = []
-    for i,nt in enumerate(nodelist):
-        nodes.append( {'id': f'node_{i}', 'type':nt} )
-    for i,p in enumerate(predlist):
-        if directionlist[i]:
-            edges.append( {'id': f'edge_{i}', 'type': p, 'source_id': f'node_{i}', 'target_id': f'node_{i+1}'})
-        else:
-            edges.append( {'id': f'edge_{i}', 'type': p, 'source_id': f'node_{i+1}', 'target_id': f'node_{i}'})
-    querygraph['nodes'] = nodes
-    querygraph['edges'] = edges
-    return querygraph
+from tests.common import write_testq
 
 def test_simple_sim():
-    tq = write_testq(['gene','chemical_substance','disease'],
+    tq = write_testq(['gene', 'chemical_substance', 'disease'],
                      ['increases_transport_of','contributes_to'],
                      [True,True])
     print(tq)
@@ -27,7 +13,7 @@ def test_simple_sim():
     assert len(nqs[0]['nodes']) == 4
 
 def test_shortest_sim():
-    tq = write_testq(['gene','chemical_substance'],
+    tq = write_testq(['gene', 'chemical_substance'],
                      ['increases_transport_of'],
                      [True])
     print(tq)
@@ -36,7 +22,7 @@ def test_shortest_sim():
     assert len(nqs[0]['nodes']) == 3
 
 def test_double_sim():
-    tq = write_testq(['gene', 'chemical_substance', 'disease','chemical_substance'],
+    tq = write_testq(['gene', 'chemical_substance', 'disease', 'chemical_substance'],
                      ['increases_transport_of', 'contributes_to', 'treats'],
                      [True, True, False])
     newqueries = rw.similarity_expand(tq)
@@ -51,7 +37,7 @@ def test_double_sim():
 
 
 def test_node_expansion_linear():
-    tq = write_testq(['gene','chemical_substance','disease'],
+    tq = write_testq(['gene', 'chemical_substance', 'disease'],
                      ['increases_transport_of','contributes_to'],
                      [True,True])
     enode = 'node_1'
@@ -123,14 +109,6 @@ def test_edge_part_of_node_expansion():
     newnodeid = nq['nodes'][-1]['id']
     assert newnodeid not in ['node_0','node_1','node_2']
     assert degree[newnodeid] == 2
-
-def test_get_node():
-    tq = write_testq(['gene', 'chemical_substance', 'disease'],
-                     ['increases_transport_of', 'contributes_to'],
-                     [True, True])
-    node = rw.get_node(tq,'node_1')
-    assert node['id'] == 'node_1'
-    assert rw.get_node(tq,'bad_node') is None
 
 def test_add_sim_node():
     tq = write_testq(['gene', 'chemical_substance', 'disease'],

@@ -1,5 +1,8 @@
 from copy import deepcopy
 
+from src.graph_util import get_node, get_edge
+
+
 def similarity_expand(querygraph,expansion_types=['chemical_substance']):
     """Takes a ReasonerStd Query Graph, and creates new graphs by doing available
     similarity expansions.  In the prototype, only chemical_substance is available."""
@@ -57,7 +60,7 @@ def apply_node_expansion_along_edge(query_graph,edge_id,node_id):
     All other edges to B remain attached to B."""
     new_graph = deepcopy(query_graph)
     simnode_id = add_sim_node(node_id,new_graph)
-    edge = get_edge(new_graph,edge_id)
+    edge = get_edge(new_graph, edge_id)
     if edge['source_id'] == node_id:
         edge['source_id'] = simnode_id
     elif edge['target_id'] == node_id:
@@ -71,26 +74,12 @@ def apply_node_expansion_along_edge(query_graph,edge_id,node_id):
 def add_sim_node(n_id,g):
     """Given a graph g, and a node n from that graph, make a new node n'
     which is a copy of node n, but with a unique id, and add it to the graph."""
-    n = get_node(g,n_id)
+    n = get_node(g, n_id)
     nprime = deepcopy(n)
     new_id = generate_novel_sim_id(n,g)
     nprime['id'] = new_id
     g['nodes'].append(nprime)
     return new_id
-
-def get_node(graph,node_id):
-    """Return the node from the graph that has the given node"""
-    for n in graph['nodes']:
-        if n['id'] == node_id:
-            return n
-    return None
-
-def get_edge(graph,edge_id):
-    """Return the node from the graph that has the given node"""
-    for n in graph['edges']:
-        if n['id'] == edge_id:
-            return n
-    return None
 
 def generate_novel_sim_id(n,g):
     node_ids = [n['id'] for n in g['nodes']]
@@ -110,8 +99,3 @@ def generate_novel_sim_edge_id(g):
         eid = f'sim_edge_{uid}'
     return eid
 
-def expand_edge(question,edge_id,expansion_set='amie1'):
-    return [question]
-
-def rewrite_question(question):
-    return [question]
