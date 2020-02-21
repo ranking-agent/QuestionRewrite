@@ -43,3 +43,13 @@ def test_get_source_and_target_type_flipped():
     assert ttype0 == 'gene'
     assert ttype1 == 'disease'
 
+def test_remove_edge():
+    tq = write_testq(['gene', 'chemical_substance', 'disease'],
+                 ['increases_expression_of', 'contributes_to'],
+                 [False, True])
+    e = src.graph_util.remove_edge(tq,'edge_1')
+    assert e['type'] == 'contributes_to'
+    assert e['source_id'] == 'node_1'
+    assert len(tq['edges']) == 1
+
+
