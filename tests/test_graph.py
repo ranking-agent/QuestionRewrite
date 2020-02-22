@@ -1,5 +1,5 @@
 import src.graph_util
-from tests.common import write_testq
+from common import write_testq
 
 def test_get_node():
     tq = write_testq(['gene', 'chemical_substance', 'disease'],

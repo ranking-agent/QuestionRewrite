@@ -16,7 +16,7 @@ install:
 
 env:
   global:
-    - PYTHONPATH=$PWD
+    - PYTHONPATH=$PWD:$PWD/tests
 
 # command to run tests
 script:
