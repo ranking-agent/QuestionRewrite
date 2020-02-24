@@ -15,8 +15,13 @@ def write_testq(nodelist,predlist,directionlist):
             edges.append( {'id': f'edge_{i}', 'type': p, 'source_id': f'node_{i}', 'target_id': f'node_{i+1}'})
         else:
             edges.append( {'id': f'edge_{i}', 'type': p, 'source_id': f'node_{i+1}', 'target_id': f'node_{i}'})
-    querygraph['nodes'] = nodes
-    querygraph['edges'] = edges
+
+    querygraph["machine_question"] = {'nodes': nodes}
+    querygraph["machine_question"].update({'edges': edges})
+    querygraph['name'] = ''
+    querygraph['natural_question'] = ''
+    querygraph['notes'] = ''
+
     return querygraph
 
 def test_simple_exp():

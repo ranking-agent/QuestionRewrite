@@ -10,12 +10,14 @@ info:
     name: MIT
     url: 'https://opensource.org/licenses/MIT'
 tags:
-  - name: QRW
+  - name: Interfaces
 paths:
-  /query:
+  /node_expand:
     post:
       tags:
-        - QRW
+        - Interfaces
+      summary: 'Get similar nodes related to a Biolink model formatted question.'
+      description: 'Returns a list of similar nodes related to the question passed in.'
       requestBody:
         content:
           application/json:
@@ -31,8 +33,37 @@ paths:
                 type: array
                 items:
                   "$ref": "#/definitions/Question"
-          description: 'Example: Returns an array of relevant questions'
-      summary: 'Get questions related to a question.'
+          description: 'Example: Returns an array of expanded nodes and edges'
+
+  /edge_expand:
+    post:
+      tags:
+        - Interfaces
+      summary: 'Get similar edges related to a Biolink model formatted question.'
+      description: 'Returns a list of similar edges related to the question passed in.'
+      parameters:
+        - in: query
+          name: depth
+          required: true
+          default: 1
+          example: 1
+      requestBody:
+        content:
+          application/json:
+              schema:
+                "$ref": "#/definitions/Question"
+        description: A question graph
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/definitions/Question"
+          description: 'Example: Returns an array of expanded edges and nodes'
+
 definitions:
   QEdge:
     description: Minimal edge specification
@@ -88,21 +119,24 @@ definitions:
     example:
       machine_question:
         edges:
-        - source_id: n0
-          target_id: n1
-        - source_id: n1
-          target_id: n2
+        - id: edge_0
+          type: increases_transport_of
+          source_id: node_0
+          target_id: node_1
+        - id: edge_1
+          type: contributes_to
+          source_id: node_1
+          target_id: node_2
         nodes:
-        - curie: MONDO:0005737
-          id: n0
-          type: disease
-        - id: n1
+        - id: node_0
           type: gene
-        - id: n2
-          type: genetic_condition
-      name: Ebola--(gene)--(genetic_condition)
-      natural_question: What genetic conditions might provide protection against Ebola?
-      notes: "#ebola #q1"
+        - id: node_1
+          type: chemical_substance
+        - id: node_2
+          type: disease
+      name: question name
+      natural_question: what question is this?
+      notes: Some notes about the question
     id: Question
     properties:
       machine_question:

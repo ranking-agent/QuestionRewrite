@@ -5,6 +5,8 @@ import json
 from sanic import Sanic, response
 from sanic.request import Request
 from src.apidocs import bp as apidocs_blueprint
+from src.similarity_rewrite import similarity_expand
+from src.edge_expand_rewrite import rewrite_edge_expand
 
 """ Sanic server for Question Rewrite - A Swagger UI/web service. """
 
@@ -17,26 +19,25 @@ app.config.ACCESS_LOG = False
 # init the app using the paramters defined in
 app.blueprint(apidocs_blueprint)
 
+# get the location of the Translator specification file
+dir_path: str = os.path.dirname(os.path.realpath(__file__))
 
-@app.post('/Node_Expand')
+# load the Translator specification
+with open(os.path.join(dir_path, 'translator_interchange_0.9.0.yaml')) as f:
+    spec: dict = yaml.load(f, Loader=yaml.SafeLoader)
+
+# load the query specification, first get the question node
+validate_with: dict = spec["components"]["schemas"]["Question"]
+
+# then get the components in their own array so the relative references are found
+validate_with["components"] = spec["components"]
+
+# remove the question node because we already have it at the top
+validate_with["components"].pop("Question", None)
+
+@app.post('/node_expand')
 async def node_expand_handler(request: Request) -> json:
-    """ Handler for question rewrite operations. """
-
-    # get the location of the Translator specification file
-    dir_path: str = os.path.dirname(os.path.realpath(__file__))
-
-    # load the Translator specification
-    with open(os.path.join(dir_path, 'translator_interchange_0.9.0.yaml')) as f:
-        spec: dict = yaml.load(f, Loader=yaml.SafeLoader)
-
-    # load the query specification, first get the question node
-    validate_with: dict = spec["components"]["schemas"]["Question"]
-
-    # then get the components in their own array so the relative references are found
-    validate_with["components"] = spec["components"]
-
-    # remove the question node because we already have it at the top
-    validate_with["components"].pop("Question", None)
+    """ Handler for node expander operations. """
 
     try:
         # load the input into a json object
@@ -45,69 +46,65 @@ async def node_expand_handler(request: Request) -> json:
         # validate the incoming json against the spec
         jsonschema.validate(instance=incoming, schema=validate_with)
 
-    # all JSON validation errors are manifested as a thrown exception
-    except jsonschema.exceptions.ValidationError as error:
-        # print (f"ERROR: {str(error)}")
-        return response.json({'Question failed validation. Message': str(error)}, status=400)
+        # get a list of expanded nodes related to the requested one
+        results = similarity_expand(incoming)
 
-    # TODO: do the real work here. get a list of rewritten questions related to the requested one
-    query_rewritten: list = [incoming, incoming]
+        # validate the output and get it in the correct format
+        expanded_response = process_response(incoming, results)
 
-    try:
-        # validate each response item against the spec
-        for item in query_rewritten:
-            jsonschema.validate(item, validate_with)
-
-    # all JSON validation errors are manifested as a thrown exception
-    except jsonschema.exceptions.ValidationError as error:
+    # Note: all JSON validation errors are manifested as a thrown exception
+    except Exception as error:
         return response.json({'Response failed validation. Message': str(error)}, status=400)
 
     # if we are here the response validated properly
-    return response.json(query_rewritten, status=200)
+    return response.json(expanded_response, status=200)
 
-@app.post('/Edge_Expand')
+@app.post('/edge_expand')
 async def edge_expand_handler(request: Request) -> json:
     """ Handler for question rewrite operations. """
 
-    # get the location of the Translator specification file
-    dir_path: str = os.path.dirname(os.path.realpath(__file__))
-
-    # load the Translator specification
-    with open(os.path.join(dir_path, 'translator_interchange_0.9.0.yaml')) as f:
-        spec: dict = yaml.load(f, Loader=yaml.SafeLoader)
-
-    # load the query specification, first get the question node
-    validate_with: dict = spec["components"]["schemas"]["Question"]
-
-    # then get the components in their own array so the relative references are found
-    validate_with["components"] = spec["components"]
-
-    # remove the question node because we already have it at the top
-    validate_with["components"].pop("Question", None)
-
     try:
+        # check the depth. throw exception if it isnt
+        depth = int(request.args['depth'][0])
+
         # load the input into a json object
         incoming: dict = json.loads(request.body)
 
         # validate the incoming json against the spec
         jsonschema.validate(instance=incoming, schema=validate_with)
 
-    # all JSON validation errors are manifested as a thrown exception
-    except jsonschema.exceptions.ValidationError as error:
-        # print (f"ERROR: {str(error)}")
-        return response.json({'Question failed validation. Message': str(error)}, status=400)
+        # get a list of expanded edges related to the requested one
+        results = rewrite_edge_expand(incoming, depth=depth)
 
-    # TODO: do the real work here. get a list of rewritten questions related to the requested one
-    query_rewritten: list = [incoming, incoming]
+        # validate the output and get it in the correct format
+        expanded_response = process_response(incoming, results)
 
-    try:
-        # validate each response item against the spec
-        for item in query_rewritten:
-            jsonschema.validate(item, validate_with)
-
-    # all JSON validation errors are manifested as a thrown exception
-    except jsonschema.exceptions.ValidationError as error:
+    # catch any exceptions
+    except Exception as error:
         return response.json({'Response failed validation. Message': str(error)}, status=400)
 
     # if we are here the response validated properly
-    return response.json(query_rewritten, status=200)
+    return response.json(expanded_response, status=200)
+
+def process_response(incoming, response) -> dict:
+    """ Validates the results of the expansion and gets it into the biolink model Question format """
+    expanded_response = {}
+
+    # validate each response item against the spec
+    for item in response:
+        # make the response biolink model compatible
+        machine_question = {'machine_question': item}
+
+        # save the required fields that came in
+        machine_question['name'] = incoming['name']
+        machine_question['natural_question'] = incoming['natural_question']
+        machine_question['notes'] = incoming['notes']
+
+        # validate the object
+        jsonschema.validate(machine_question, validate_with)
+
+        # add this set to the return
+        expanded_response.update(machine_question)
+
+    # return to the caller
+    return expanded_response

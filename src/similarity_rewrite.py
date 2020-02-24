@@ -3,11 +3,14 @@ from copy import deepcopy
 from src.graph_util import get_node, get_edge
 
 
-def similarity_expand(querygraph,expansion_types=['chemical_substance']):
+def similarity_expand(querygraph, expansion_types=['chemical_substance']):
     """Takes a ReasonerStd Query Graph, and creates new graphs by doing available
     similarity expansions.  In the prototype, only chemical_substance is available."""
     #Find the nodes that can be expanded
     enodes = []
+
+    querygraph = querygraph['machine_question']
+
     for node in querygraph['nodes']:
         if node['type'] in expansion_types:
             enodes.append(node['id'])

@@ -11,6 +11,9 @@ def rewrite_edge_expand(machine_question, expanders=['amie_v1.db'], depth =1):
     This can be iteratively applied for *depth* times.  Passing in a single edge
     with depth=1 produces a two-hop question, and depth=2 will produce 3 hop
     questions, and also return the intermediate 2 hops."""
+
+    machine_question = machine_question['machine_question']
+
     to_expand = [machine_question]
     if depth < 1:
         return []
