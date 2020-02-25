@@ -89,10 +89,10 @@ def add_sim_node(n_id,g):
 def generate_novel_sim_id(n,g):
     node_ids = [n['id'] for n in g['nodes']]
     uid = 0
-    nid = f'sim_to_{n}_{uid}'
+    nid = f"sim_to_{n['id']}_{uid}"
     while nid in node_ids:
         uid += 1
-        nid = f'sim_to_{n}_{uid}'
+        nid = f"sim_to_{n['id']}_{uid}"
     return nid
 
 def generate_novel_sim_edge_id(g):
