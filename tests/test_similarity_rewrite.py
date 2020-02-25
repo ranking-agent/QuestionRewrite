@@ -88,8 +88,9 @@ def test_node_expansion_branch():
 
     node3 = {"id": "node_3", "type": 'gene'}
     edge2 = {"id": "edge_2", "type": 'decreases_transport_of', "source_id": "node_3", "target_id": "node_1"}
-    tq['machine_question']['nodes'].append(node3)
-    tq['machine_question']['edges'].append(edge2)
+
+    tq['nodes'].append(node3)
+    tq['edges'].append(edge2)
     enode = 'node_1'
     newqueries = rw.apply_node_expansion(tq, enode)
     assert len(newqueries) == 3
