@@ -12,7 +12,8 @@ def rewrite_edge_expand(machine_question, expanders=['amie_v1.db'], depth =1):
     with depth=1 produces a two-hop question, and depth=2 will produce 3 hop
     questions, and also return the intermediate 2 hops."""
 
-    machine_question = machine_question['machine_question']
+    if machine_question.get('machine_question') is not None:
+        machine_question = machine_question['machine_question']
 
     to_expand = [machine_question]
     if depth < 1:

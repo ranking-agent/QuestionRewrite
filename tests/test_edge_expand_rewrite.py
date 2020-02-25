@@ -38,6 +38,10 @@ def test_simple_exp():
 
 def test_depth2_exp():
     tq = write_testq(['chemical_substance','disease'], ['treats'], [True])
+
+    if tq.get('machine_question') is not None:
+        tq = tq['machine_question']
+
     original_node_ids =  [node['id'] for node in tq['nodes']]
     nq_1 = rw.rewrite_edge_expand(tq)
     nq_2 = rw.rewrite_edge_expand(tq,depth=2)
@@ -63,6 +67,10 @@ def test_depth2_exp():
 
 def test_edge_expand():
     tq = write_testq(['chemical_substance','disease'], ['treats'], [True])
+
+    if tq.get('machine_question') is not None:
+        tq = tq['machine_question']
+
     #amie_v1 isn't usually exposed, this is just for the test.
     nqs = rw.edge_expand(tq,'edge_0','amie_v1.db')
     assert len(nqs) > 3
@@ -106,6 +114,10 @@ def test_add_pareto():
 def test_replace_edge():
     """Test replacement of one edge with a different predicate"""
     tq = write_testq(['chemical_substance','disease'], ['treats'], [True])
+
+    if tq.get('machine_question') is not None:
+        tq = tq['machine_question']
+
     replace_edge = 'edge_0'
     expansion = {'nodes':[{'id':'a', 'type': 'chemical_subtance'},
                           {'id':'b', 'type': 'disease'}],
@@ -123,6 +135,10 @@ def test_replace_edge():
 def test_replace_edge_reverse():
     """Test replacement of one edge with a different predicate pointing the othe way"""
     tq = write_testq(['chemical_substance', 'disease'], ['treats'], [True])
+
+    if tq.get('machine_question') is not None:
+        tq = tq['machine_question']
+
     replace_edge = 'edge_0'
     expansion = {'nodes': [{'id': 'a', 'type': 'chemical_subtance'},
                            {'id': 'b', 'type': 'disease'}],
@@ -139,6 +155,10 @@ def test_replace_edge_reverse():
 def test_replace_one_edge_with_two():
     """Test replacement of one edge with a different predicate pointing the othe way"""
     tq = write_testq(['chemical_substance', 'disease'], ['treats'], [True])
+
+    if tq.get('machine_question') is not None:
+        tq = tq['machine_question']
+
     replace_edge = 'edge_0'
     expansion = {'nodes': [{'id': 'a', 'type': 'chemical_substance'},
                            {'id': 'c', 'type': 'gene'},
@@ -173,6 +193,10 @@ def test_replace_one_edge_with_two():
 def test_replace_one_edge_with_two_twice():
     """Test replacement of one edge with a different predicate pointing the othe way"""
     tq = write_testq(['chemical_substance', 'disease'], ['treats'], [True])
+
+    if tq.get('machine_question') is not None:
+        tq = tq['machine_question']
+
     replace_edge = 'edge_0'
     expansion = {'nodes': [{'id': 'a', 'type': 'chemical_substance'},
                            {'id': 'c', 'type': 'gene'},

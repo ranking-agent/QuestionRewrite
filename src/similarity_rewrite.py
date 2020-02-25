@@ -38,6 +38,7 @@ def apply_node_expansion(query_graph,expand_node_id):
     # the combinations.
     #First, what edges do we need to expand into?
     edge_cands = []
+
     for edge in query_graph['edges']:
         if expand_node_id == edge['source_id'] or expand_node_id == edge['target_id']:
             edge_cands.append(edge['id'])

@@ -7,6 +7,7 @@ def test_simple_sim():
     tq = write_testq(['gene', 'chemical_substance', 'disease'],
                      ['increases_transport_of','contributes_to'],
                      [True,True])
+
     print(tq)
     nqs = rw.similarity_expand(tq)
     assert len(nqs) == 1
@@ -16,6 +17,10 @@ def test_shortest_sim():
     tq = write_testq(['gene', 'chemical_substance'],
                      ['increases_transport_of'],
                      [True])
+
+    if tq.get('machine_question') is not None:
+        tq = tq['machine_question']
+
     print(tq)
     nqs = rw.similarity_expand(tq)
     assert len(nqs) == 1
@@ -25,6 +30,10 @@ def test_double_sim():
     tq = write_testq(['gene', 'chemical_substance', 'disease', 'chemical_substance'],
                      ['increases_transport_of', 'contributes_to', 'treats'],
                      [True, True, False])
+
+    if tq.get('machine_question') is not None:
+        tq = tq['machine_question']
+
     newqueries = rw.similarity_expand(tq)
     assert len(newqueries) == 3
     counts = defaultdict(int)
@@ -40,6 +49,10 @@ def test_node_expansion_linear():
     tq = write_testq(['gene', 'chemical_substance', 'disease'],
                      ['increases_transport_of','contributes_to'],
                      [True,True])
+
+    if tq.get('machine_question') is not None:
+        tq = tq['machine_question']
+
     enode = 'node_1'
     newqueries = rw.apply_node_expansion(tq,enode)
     assert len(newqueries) == 1
@@ -52,6 +65,10 @@ def test_node_expansion_end():
     tq = write_testq(['gene', 'disease', 'chemical_substance'],
                      ['gene_to_disease', 'contributes_to'],
                      [True, False])
+
+    if tq.get('machine_question') is not None:
+        tq = tq['machine_question']
+
     enode = 'node_2'
     newqueries = rw.apply_node_expansion(tq, enode)
     assert len(newqueries) == 1
@@ -65,10 +82,14 @@ def test_node_expansion_branch():
     tq = write_testq(['gene', 'chemical_substance', 'disease'],
                      ['increases_transport_of', 'contributes_to'],
                      [True, True])
+
+    if tq.get('machine_question') is not None:
+        tq = tq['machine_question']
+
     node3 = {"id": "node_3", "type": 'gene'}
     edge2 = {"id": "edge_2", "type": 'decreases_transport_of', "source_id": "node_3", "target_id": "node_1"}
-    tq['nodes'].append(node3)
-    tq['edges'].append(edge2)
+    tq['machine_question']['nodes'].append(node3)
+    tq['machine_question']['edges'].append(edge2)
     enode = 'node_1'
     newqueries = rw.apply_node_expansion(tq, enode)
     assert len(newqueries) == 3
@@ -84,6 +105,10 @@ def test_edge_part_of_node_expansion():
     tq = write_testq(['gene', 'chemical_substance', 'disease'],
                      ['increases_transport_of', 'contributes_to'],
                      [True, True])
+
+    if tq.get('machine_question') is not None:
+        tq = tq['machine_question']
+
     enode = 'node_1'
     eedge = 'edge_1'
     nq = rw.apply_node_expansion_along_edge(tq, eedge, enode)
@@ -114,6 +139,10 @@ def test_add_sim_node():
     tq = write_testq(['gene', 'chemical_substance', 'disease'],
                      ['increases_transport_of', 'contributes_to'],
                      [True, True])
+
+    if tq.get('machine_question') is not None:
+        tq = tq['machine_question']
+
     rw.add_sim_node('node_1',tq)
     #Now there are 4 nodes
     assert len(tq['nodes']) == 4
@@ -127,6 +156,10 @@ def test_generate_novel_sim_id():
     tq = write_testq(['gene', 'chemical_substance', 'disease'],
                      ['increases_transport_of', 'contributes_to'],
                      [True, True])
+
+    if tq.get('machine_question') is not None:
+        tq = tq['machine_question']
+
     nid = rw.generate_novel_sim_id('node_0',tq)
     original_node_ids = [node['id'] for node in tq['nodes']]
     assert nid not in original_node_ids
