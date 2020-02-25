@@ -47,10 +47,10 @@ async def node_expand_handler(request: Request) -> json:
         jsonschema.validate(instance=incoming, schema=validate_with)
 
         # get a list of expanded nodes related to the requested one
-        results = similarity_expand(incoming)
+        results: list = similarity_expand(incoming)
 
         # validate the output and get it in the correct format
-        expanded_response = process_response(incoming, results)
+        expanded_response: list = process_response(incoming, results)
 
     # Note: all JSON validation errors are manifested as a thrown exception
     except Exception as error:
@@ -65,7 +65,7 @@ async def edge_expand_handler(request: Request) -> json:
 
     try:
         # check the depth. throw exception if it isnt
-        depth = int(request.args['depth'][0])
+        depth: int = int(request.args['depth'][0])
 
         # load the input into a json object
         incoming: dict = json.loads(request.body)
@@ -74,10 +74,10 @@ async def edge_expand_handler(request: Request) -> json:
         jsonschema.validate(instance=incoming, schema=validate_with)
 
         # get a list of expanded edges related to the requested one
-        results = rewrite_edge_expand(incoming, depth=depth)
+        results: list = rewrite_edge_expand(incoming, depth=depth)
 
         # validate the output and get it in the correct format
-        expanded_response = process_response(incoming, results)
+        expanded_response: list = process_response(incoming, results)
 
     # catch any exceptions
     except Exception as error:
@@ -86,14 +86,14 @@ async def edge_expand_handler(request: Request) -> json:
     # if we are here the response validated properly
     return response.json(expanded_response, status=200)
 
-def process_response(incoming, response) -> dict:
+def process_response(incoming, response) -> list:
     """ Validates the results of the expansion and gets it into the biolink model Question format """
-    expanded_response = {}
+    expanded_response: list = []
 
     # validate each response item against the spec
     for item in response:
         # make the response biolink model compatible
-        machine_question = {'machine_question': item}
+        machine_question: dict = {'machine_question': item}
 
         # save the required fields that came in
         machine_question['name'] = incoming['name']
@@ -104,7 +104,7 @@ def process_response(incoming, response) -> dict:
         jsonschema.validate(machine_question, validate_with)
 
         # add this set to the return
-        expanded_response.update(machine_question)
+        expanded_response.append(machine_question)
 
     # return to the caller
     return expanded_response
