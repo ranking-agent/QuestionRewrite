@@ -120,13 +120,13 @@ definitions:
       machine_question:
         edges:
         - id: edge_0
-          type: increases_transport_of
           source_id: node_0
           target_id: node_1
+          type: increases_transport_of
         - id: edge_1
-          type: contributes_to
           source_id: node_1
           target_id: node_2
+          type: contributes_to
         nodes:
         - id: node_0
           type: gene
