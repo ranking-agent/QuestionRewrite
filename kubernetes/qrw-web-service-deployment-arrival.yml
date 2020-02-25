@@ -25,13 +25,6 @@ items:
             - containerPort: 6380
           resources: {}
           imagePullPolicy: Always
-          volumeMounts:
-            - mountPath: /data
-              name: qrw-web-data-volume
-        volumes:
-          - name: qrw-web-data-volume
-            persistentVolumeClaim:
-              claimName: qrw-web-data-pvc
         restartPolicy: Always
   status: {}
 

@@ -161,11 +161,14 @@ def test_generate_novel_sim_id():
     if tq.get('machine_question') is not None:
         tq = tq['machine_question']
 
-    nid = rw.generate_novel_sim_id('node_0',tq)
+    test_node = {}
+    test_node['id'] = 'node_0'
+
+    nid = rw.generate_novel_sim_id(test_node,tq)
     original_node_ids = [node['id'] for node in tq['nodes']]
     assert nid not in original_node_ids
     tq['nodes'].append( {'id':nid} )
-    nid2 = rw.generate_novel_sim_id('node_0',tq)
+    nid2 = rw.generate_novel_sim_id(test_node,tq)
     assert nid2 != nid
     original_node_ids2 = [node['id'] for node in tq['nodes']]
     assert nid2 not in original_node_ids2
