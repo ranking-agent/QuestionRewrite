@@ -1,8 +1,8 @@
 [![Build Status](https://travis-ci.com/TranslatorIIPrototypes/QuestionRewrite.svg?branch=master)](https://travis-ci.com/TranslatorIIPrototypes/QuestionRewrite)
 
-# QuestionRewrite
+# QuestionAugmentation
 
-A Swagger UI/web service interface for the Question Rewrite service.
+A Swagger UI/web service interface for the Question augmentation service.
 
 A service that accepts a properly formatted ReasonerStd question and returns similar questions to the user.
 

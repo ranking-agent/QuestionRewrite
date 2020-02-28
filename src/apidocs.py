@@ -12,7 +12,7 @@ template: Template = env.get_template('index.j2')
 
 # render the template using the parameters specified in the openapi spec
 html_content: str = template.render(
-    title="Question Rewrite - Swagger UI and web service",
+    title="Question augmentation - Swagger UI and web service",
     openapi_spec_url="./openapi.yml",
 )
 

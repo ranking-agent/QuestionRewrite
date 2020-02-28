@@ -1,11 +1,11 @@
 openapi: 3.0.2
 info:
-  title: Question Rewrite - A Swagger UI/web service
-  description: 'A Swagger UI/web service interface for the Question Rewrite service'
+  title: Question Augmentation - A Swagger UI/web service
+  description: 'A Swagger UI/web service interface for the Question augmentation service'
   version: '0.0.1'
   contact:
     email: whomever@renci.org
-  termsOfService: http://robokop.renci.org:7055/tos?service_long=Question+rewrite+service&provider_long=the+Translator+Consortium
+  termsOfService: http://robokop.renci.org:7055/tos?service_long=Question+augmentation+service&provider_long=the+Translator+Consortium
   license:
     name: MIT
     url: 'https://opensource.org/licenses/MIT'

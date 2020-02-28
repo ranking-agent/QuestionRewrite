@@ -2,12 +2,12 @@
 from setuptools import setup
 
 setup(
-    name='Question ReWrite',
+    name='Question augmentation',
     version='1.0.0',
     author='Phil Owen',
     author_email='powen@renci.org',
     url='https://github.com/TranslatorIIPrototypes/QuestionRewrite',
-    description='Question rewrite - Offers additional relevant questions based initial question asked.',
+    description='Question augmentation - Offers additional relevant questions based initial question asked.',
     packages=['qrw'],
     include_package_data=True,
     zip_safe=False,

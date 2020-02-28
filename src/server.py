@@ -11,7 +11,7 @@ from src.edge_expand_rewrite import rewrite_edge_expand
 """ Sanic server for Question Rewrite - A Swagger UI/web service. """
 
 # initialize this web app
-app: Sanic = Sanic("Question rewrite")
+app: Sanic = Sanic("Question augmentation")
 
 # suppress access logging
 app.config.ACCESS_LOG = False
@@ -61,7 +61,7 @@ async def node_expand_handler(request: Request) -> json:
 
 @app.post('/edge_expand')
 async def edge_expand_handler(request: Request) -> json:
-    """ Handler for question rewrite operations. """
+    """ Handler for question augmentation operations. """
 
     try:
         # check the depth. throw exception if it isnt
