@@ -1,7 +1,8 @@
 openapi: 3.0.2
 info:
   title: Question Augmentation - A Swagger UI/web service
-  description: 'A Swagger UI/web service interface for the Question augmentation service'
+  description: 'A Swagger UI/web service interface for the Question augmentation service.>/br>This service that accepts a properly formatted ReasonerStd question and returns similar and augmented questions to the user.
+'
   version: '0.0.1'
   contact:
     email: whomever@renci.org
