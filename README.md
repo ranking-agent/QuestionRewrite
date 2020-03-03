@@ -34,7 +34,7 @@ docker-compose up -d
 #### Launch
     docker run -it \ 
         -p <port>:6380 \ 
-        QuestionAugmentation 
+        QuestionAugmentation
         
 #### Usage
 
