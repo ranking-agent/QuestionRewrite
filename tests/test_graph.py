@@ -1,13 +1,13 @@
 import src.graph_util
-from common import write_testq
+from tests.common import write_testq
 
 def test_get_node():
     tq = write_testq(['gene', 'chemical_substance', 'disease'],
                      ['increases_transport_of', 'contributes_to'],
                      [True, True])
 
-    if tq.get('machine_question') is not None:
-        tq = tq['machine_question']
+    if tq.get('query_graph') is not None:
+        tq = tq['query_graph']
 
     node = src.graph_util.get_node(tq, 'node_1')
     assert node['id'] == 'node_1'
@@ -18,8 +18,8 @@ def test_get_edge():
                      ['increases_transport_of', 'contributes_to'],
                      [True, True])
 
-    if tq.get('machine_question') is not None:
-        tq = tq['machine_question']
+    if tq.get('query_graph') is not None:
+        tq = tq['query_graph']
 
     edge = src.graph_util.get_edge(tq, 'edge_1')
     assert edge['type'] == 'contributes_to'
@@ -30,8 +30,8 @@ def test_get_source_and_target_type():
                      ['increases_transport_of', 'contributes_to'],
                      [True, True])
 
-    if tq.get('machine_question') is not None:
-        tq = tq['machine_question']
+    if tq.get('query_graph') is not None:
+        tq = tq['query_graph']
 
     stype0 = src.graph_util.get_source_type(tq, 'edge_0')
     stype1 = src.graph_util.get_source_type(tq, 'edge_1')
@@ -47,8 +47,8 @@ def test_get_source_and_target_type_flipped():
                      ['increases_expression_of', 'contributes_to'],
                      [False, True])
 
-    if tq.get('machine_question') is not None:
-        tq = tq['machine_question']
+    if tq.get('query_graph') is not None:
+        tq = tq['query_graph']
 
     stype0 = src.graph_util.get_source_type(tq, 'edge_0')
     stype1 = src.graph_util.get_source_type(tq, 'edge_1')
@@ -64,8 +64,8 @@ def test_remove_edge():
                  ['increases_expression_of', 'contributes_to'],
                  [False, True])
 
-    if tq.get('machine_question') is not None:
-        tq = tq['machine_question']
+    if tq.get('query_graph') is not None:
+        tq = tq['query_graph']
 
     e = src.graph_util.remove_edge(tq,'edge_1')
     assert e['type'] == 'contributes_to'

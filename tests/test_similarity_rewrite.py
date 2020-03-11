@@ -18,8 +18,8 @@ def test_shortest_sim():
                      ['increases_transport_of'],
                      [True])
 
-    if tq.get('machine_question') is not None:
-        tq = tq['machine_question']
+    if tq.get('query_graph') is not None:
+        tq = tq['query_graph']
 
     print(tq)
     nqs = rw.similarity_expand(tq)
@@ -31,8 +31,8 @@ def test_double_sim():
                      ['increases_transport_of', 'contributes_to', 'treats'],
                      [True, True, False])
 
-    if tq.get('machine_question') is not None:
-        tq = tq['machine_question']
+    if tq.get('query_graph') is not None:
+        tq = tq['query_graph']
 
     newqueries = rw.similarity_expand(tq)
     assert len(newqueries) == 3
@@ -50,8 +50,8 @@ def test_node_expansion_linear():
                      ['increases_transport_of','contributes_to'],
                      [True,True])
 
-    if tq.get('machine_question') is not None:
-        tq = tq['machine_question']
+    if tq.get('query_graph') is not None:
+        tq = tq['query_graph']
 
     enode = 'node_1'
     newqueries = rw.apply_node_expansion(tq,enode)
@@ -66,8 +66,8 @@ def test_node_expansion_end():
                      ['gene_to_disease', 'contributes_to'],
                      [True, False])
 
-    if tq.get('machine_question') is not None:
-        tq = tq['machine_question']
+    if tq.get('query_graph') is not None:
+        tq = tq['query_graph']
 
     enode = 'node_2'
     newqueries = rw.apply_node_expansion(tq, enode)
@@ -83,8 +83,8 @@ def test_node_expansion_branch():
                      ['increases_transport_of', 'contributes_to'],
                      [True, True])
 
-    if tq.get('machine_question') is not None:
-        tq = tq['machine_question']
+    if tq.get('query_graph') is not None:
+        tq = tq['query_graph']
 
     node3 = {"id": "node_3", "type": 'gene'}
     edge2 = {"id": "edge_2", "type": 'decreases_transport_of', "source_id": "node_3", "target_id": "node_1"}
@@ -107,8 +107,8 @@ def test_edge_part_of_node_expansion():
                      ['increases_transport_of', 'contributes_to'],
                      [True, True])
 
-    if tq.get('machine_question') is not None:
-        tq = tq['machine_question']
+    if tq.get('query_graph') is not None:
+        tq = tq['query_graph']
 
     enode = 'node_1'
     eedge = 'edge_1'
@@ -141,8 +141,8 @@ def test_add_sim_node():
                      ['increases_transport_of', 'contributes_to'],
                      [True, True])
 
-    if tq.get('machine_question') is not None:
-        tq = tq['machine_question']
+    if tq.get('query_graph') is not None:
+        tq = tq['query_graph']
 
     rw.add_sim_node('node_1',tq)
     #Now there are 4 nodes
@@ -158,8 +158,8 @@ def test_generate_novel_sim_id():
                      ['increases_transport_of', 'contributes_to'],
                      [True, True])
 
-    if tq.get('machine_question') is not None:
-        tq = tq['machine_question']
+    if tq.get('query_graph') is not None:
+        tq = tq['query_graph']
 
     test_node = {}
     test_node['id'] = 'node_0'
