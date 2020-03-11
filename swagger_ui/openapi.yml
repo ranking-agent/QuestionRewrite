@@ -1,7 +1,13 @@
 openapi: 3.0.2
 info:
   title: Question Augmentation - A Swagger UI/web service
-  description: 'A Swagger UI/web service interface for the Question augmentation service.>/br>This service that accepts a properly formatted ReasonerStd question and returns similar and augmented questions to the user.
+  description: 'Question Augmentation accepts ReasonerAPI Std (0.9.2) messages that must contain a query_graph.  It
+  returns a list of augmented query graphs.
+  <p/>
+  <b>node_expand</b> creates new questions by adding nodes similar to original nodes.  In this prototype, it only applies
+  to chemical_substance nodes.
+  <b>edge_expand</b> creates new questions by replacing individual predicates with related predicates or pairs of predicates.
+  This potentially turns e.g. one-hop questions into two-hop questions.
 '
   version: '0.0.1'
   contact:
@@ -17,8 +23,8 @@ paths:
     post:
       tags:
         - Interfaces
-      summary: 'Get similar nodes related to a Biolink model formatted question.'
-      description: 'Returns a list of similar nodes related to the question passed in.'
+      summary: 'Creates new questions by expanding certain node types into pairs or groups of similar node types'
+      description: ''
       requestBody:
         content:
           application/json:
@@ -40,8 +46,8 @@ paths:
     post:
       tags:
         - Interfaces
-      summary: 'Get similar edges related to a Biolink model formatted question.'
-      description: 'Returns a list of similar edges related to the question passed in.'
+      summary: 'Creates a list of new questions by replacing individual edges with related edges or groups of edges.'
+      description: ''
       parameters:
         - in: query
           name: depth

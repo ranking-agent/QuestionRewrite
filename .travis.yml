@@ -16,7 +16,7 @@ install:
 
 env:
   global:
-    - PYTHONPATH=$PWD
+    - PYTHONPATH=$TRAVIS_BUILD_DIR
 
 # command to run tests
 script:
