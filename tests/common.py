@@ -10,10 +10,7 @@ def write_testq(nodelist, predlist, directionlist):
         else:
             edges.append( {'id': f'edge_{i}', 'type': p, 'source_id': f'node_{i+1}', 'target_id': f'node_{i}'})
 
-    querygraph["machine_question"] = {'nodes': nodes}
-    querygraph["machine_question"].update({'edges': edges})
-    querygraph['name'] = ''
-    querygraph['natural_question'] = ''
-    querygraph['notes'] = ''
+    querygraph["query_graph"] = {'nodes': nodes}
+    querygraph["query_graph"].update({'edges': edges})
 
     return querygraph

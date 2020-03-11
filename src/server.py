@@ -23,17 +23,17 @@ app.blueprint(apidocs_blueprint)
 dir_path: str = os.path.dirname(os.path.realpath(__file__))
 
 # load the Translator specification
-with open(os.path.join(dir_path, 'translator_interchange_0.9.0.yaml')) as f:
+with open(os.path.join(dir_path, 'TranslatorReasonersAPI_0.9.2.yaml')) as f:
     spec: dict = yaml.load(f, Loader=yaml.SafeLoader)
 
 # load the query specification, first get the question node
-validate_with: dict = spec["components"]["schemas"]["Question"]
+validate_with: dict = spec["components"]["schemas"]["Message"]
 
 # then get the components in their own array so the relative references are found
 validate_with["components"] = spec["components"]
 
 # remove the question node because we already have it at the top
-validate_with["components"].pop("Question", None)
+validate_with["components"].pop("Message", None)
 
 @app.post('/node_expand')
 async def node_expand_handler(request: Request) -> json:
@@ -47,7 +47,7 @@ async def node_expand_handler(request: Request) -> json:
         jsonschema.validate(instance=incoming, schema=validate_with)
 
         # get a list of expanded nodes related to the requested one
-        results: list = similarity_expand(incoming)
+        results: list = similarity_expand(incoming['message'])
 
         # validate the output and get it in the correct format
         expanded_response: list = process_response(incoming, results)
@@ -93,12 +93,12 @@ def process_response(incoming, response) -> list:
     # validate each response item against the spec
     for item in response:
         # make the response biolink model compatible
-        machine_question: dict = {'machine_question': item}
+        machine_question: dict = {'query_graph': item}
 
         # save the required fields that came in
-        machine_question['name'] = incoming['name']
-        machine_question['natural_question'] = incoming['natural_question']
-        machine_question['notes'] = incoming['notes']
+        #machine_question['name'] = incoming['name']
+        #machine_question['natural_question'] = incoming['natural_question']
+        #machine_question['notes'] = incoming['notes']
 
         # validate the object
         jsonschema.validate(machine_question, validate_with)

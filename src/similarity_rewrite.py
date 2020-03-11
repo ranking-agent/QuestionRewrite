@@ -9,8 +9,8 @@ def similarity_expand(querygraph, expansion_types=['chemical_substance']):
     #Find the nodes that can be expanded
     enodes = []
 
-    if querygraph.get('machine_question') is not None:
-        querygraph = querygraph['machine_question']
+    if querygraph.get('query_graph') is not None:
+        querygraph = querygraph['query_graph']
 
     for node in querygraph['nodes']:
         if node['type'] in expansion_types:
