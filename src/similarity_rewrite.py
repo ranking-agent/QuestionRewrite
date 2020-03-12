@@ -73,7 +73,7 @@ def apply_node_expansion_along_edge(query_graph,edge_id,node_id):
     else:
         raise Exception('The input edge does not connect to the input node')
     new_edge_id = generate_novel_sim_edge_id(new_graph)
-    new_graph['edges'].append( {'id': new_edge_id, 'source_id': node_id, 'target_id': simnode_id})
+    new_graph['edges'].append( {'id': new_edge_id, 'source_id': node_id, 'target_id': simnode_id, 'type':'similar_to'})
     return new_graph
 
 def add_sim_node(n_id,g):

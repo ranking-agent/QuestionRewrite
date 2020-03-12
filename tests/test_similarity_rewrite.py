@@ -1,7 +1,7 @@
 import src.similarity_rewrite as rw
 from collections import defaultdict
 
-from common import write_testq
+from tests.common import write_testq
 
 def test_simple_sim():
     tq = write_testq(['gene', 'chemical_substance', 'disease'],
@@ -12,6 +12,9 @@ def test_simple_sim():
     nqs = rw.similarity_expand(tq)
     assert len(nqs) == 1
     assert len(nqs[0]['nodes']) == 4
+    assert len(nqs[0]['edges']) == 3
+    assert nqs[0]['edges'][-1]['type'] == 'similar_to'
+
 
 def test_shortest_sim():
     tq = write_testq(['gene', 'chemical_substance'],
