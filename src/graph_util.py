@@ -35,8 +35,8 @@ def remove_edge(graph, edge_id):
 def print_linear_graph(graph):
     #Assuming that the graph is linear, write a cypherlike version
     #First find a loose edge
-    if graph.get('machine_question') is not None:
-        graph = graph['machine_question']
+    if graph.get('query_graph') is not None:
+        graph = graph['query_graph']
 
     nconnections = defaultdict(int)
     for e in graph['edges']:
