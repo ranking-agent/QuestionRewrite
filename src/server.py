@@ -65,7 +65,10 @@ async def edge_expand_handler(request: Request) -> json:
 
     try:
         # check the depth. throw exception if it isnt
-        depth: int = int(request.args['depth'][0])
+        if 'depth' in request.args:
+            depth: int = int(request.args['depth'][0])
+        else:
+            depth: int = 1
 
         # load the input into a json object
         incoming: dict = json.loads(request.body)
@@ -74,7 +77,7 @@ async def edge_expand_handler(request: Request) -> json:
         jsonschema.validate(instance=incoming, schema=validate_with)
 
         # get a list of expanded edges related to the requested one
-        results: list = rewrite_edge_expand(incoming, depth=depth)
+        results: list = rewrite_edge_expand(incoming['message'], depth=depth)
 
         # validate the output and get it in the correct format
         expanded_response: list = process_response(incoming, results)

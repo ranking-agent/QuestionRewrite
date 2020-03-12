@@ -6,16 +6,16 @@ from src.graph_util import get_edge, get_source_type, get_target_type, remove_ed
 import pandas as pd
 import numpy as np
 
-def rewrite_edge_expand(machine_question, expanders=['amie_v1.db'], depth =1):
+def rewrite_edge_expand(query_graph, expanders=['amie_v1.db'], depth =1):
     """Given a machine question, apply edge expansions from a set of expanders.
     This can be iteratively applied for *depth* times.  Passing in a single edge
     with depth=1 produces a two-hop question, and depth=2 will produce 3 hop
     questions, and also return the intermediate 2 hops."""
 
-    if machine_question.get('machine_question') is not None:
-        machine_question = machine_question['machine_question']
+    if query_graph.get('query_graph') is not None:
+        query_graph = query_graph['query_graph']
 
-    to_expand = [machine_question]
+    to_expand = [query_graph]
     if depth < 1:
         return []
     retquestions = []

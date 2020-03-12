@@ -1,0 +1,24 @@
+{
+  "message": {
+    "query_graph": {
+      "nodes": [
+        {
+          "id": "n0",
+          "type": "gene"
+        },
+        {
+          "id": "n1",
+          "type": "disease"
+        }
+      ],
+      "edges": [
+        {
+          "id": "e0",
+          "source_id": "n0",
+          "target_id": "n1",
+          "type": "treats"
+        }
+      ]
+    }
+  }
+}
