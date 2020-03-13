@@ -1,48 +1,39 @@
 [![Build Status](https://travis-ci.com/TranslatorIIPrototypes/QuestionRewrite.svg?branch=master)](https://travis-ci.com/TranslatorIIPrototypes/QuestionRewrite)
 
 # Question Augmentation
+### A web service and Swagger UI for the Question Augmentation service for ARAGORN.
 
-A Swagger UI/web service interface for the Question augmentation service.
+This serivce accepts a [translator reasoner standard message](https://github.com/NCATS-Tangerine/NCATS-ReasonerStdAPI) containing a question graph and returns a set of similar questions that may yield better answers.
 
-A service that accepts a properly formatted ReasonerStd question and returns similar augmented questions to the user.
+## Demonstration
 
-## Installation
-Note: This environment expects Python version 3.8.
+A live version of the API can be found [here](https://questionaugmentation.renci.org/apidocs/).
 
-Create a virtual environment and activate.
-    
-    python -m venv venv
-    source venv/bin/activate
+An example notebook demonstrating the API can be found [here](https://github.com/TranslatorIIPrototypes/QuestionRewrite/blob/master/documentation/QuestionAugmentationSimilarity_strider.ipynb).
 
-Install dependencies
-    
-    pip install -r requirements.txt    
-    
-Run web server.
+## Deployment
 
-    python main.py --host 0.0.0.0 --port 6380
+Please download and implement the Docker container located in the Docker hub repo: renciorg\qrw.
 
-### Docker
+Kubernetes deployment files are available in the \kubernetes directory.
 
-You may also download and implement the Docker container located in the Docker hub repo: renciorg\qrw. 
+### Local Deployment
+
+This environment expects Python version 3.8.
 
 ```bash
 cd <code base>
-docker-compose build
-docker-compose up -d
+pip install -r requirements.txt
+python main.py --host 0.0.0.0 --port 6380
 ```
-#### Launch
-    docker run -it \ 
-        -p <port>:6380 \ 
-        QuestionAugmentation
-        
-#### Usage
+
+### Docker
+
+```bash
+docker run -it -p <port>:6380 QuestionAugmentation
+```
+
+## Usage
 
 http://"host name or IP":"port"/apidocs
-
-### Kubernetes 
-Deployment files for Kubernetes are available in the \kubernetes directory.
-        
-
-
 
