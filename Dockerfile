@@ -19,6 +19,9 @@ RUN git clone https://github.com/TranslatorIIPrototypes/QuestionRewrite.git
 # go to the repo dir
 WORKDIR /repo/QuestionRewrite
 
+# insure we have the latest
+RUN git pull
+
 # install all required packages
 RUN pip install -r requirements.txt
 
