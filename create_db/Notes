@@ -1,0 +1,4 @@
+1 run pull_edges_from_neo.py creating data/* files
+2 run make_inputs.py creating predicates and instances file
+3 cat predcates instances > amie_input.txt
+4 wc -l predicates (to get the number of jobs that you'll have to run)
