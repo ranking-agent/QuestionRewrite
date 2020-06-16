@@ -2,7 +2,7 @@
 
 #SBATCH -N 1
 #SBATCH -c 4
-#SBATCH --array=269-368 
+#SBATCH --array=1-750
 #SBATCH --mem-per-cpu=8000
 #SBATCH -t 72:00:00
 #SBATCH -o logs/%A_%a.out
@@ -13,7 +13,7 @@ echo `hostname`
 wdir=/projects/sequence_analysis/vol3/bizon/amie
 cd $wdir
 
-pred=`head -n $SLURM_ARRAY_TASK_ID preds | tail -n 1`
+pred=`head -n $SLURM_ARRAY_TASK_ID preds | tail -n 1 | awk '{print $1}'`
 echo $pred
 
 onamev="${pred//<}"

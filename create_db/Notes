@@ -2,3 +2,4 @@
 2 run make_inputs.py creating predicates and instances file
 3 cat predcates instances > amie_input.txt
 4 wc -l predicates (to get the number of jobs that you'll have to run)
+5 set the number in the array of amie.sh and sbatch it
