@@ -20,7 +20,7 @@ class ExpansionManagement:
         self.ddir = os.path.join(os.path.dirname(os.path.abspath(__file__)),'data')
         self._driver = self.driver(db_url,neo4j_password)
         #Make sure it worked...
-        res = self.query('match (a:gene {id:"HGNC:"}) return a')
+        res = self.query('match (a:gene {id:"NCBIGene:445"}) return a')
         if len(res) != 1:
             print('Connection to neo4j failed')
             exit()
