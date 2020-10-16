@@ -25,10 +25,11 @@ class ExpansionManagement:
             print('Connection to neo4j failed')
             exit()
         #This could be pulled from some combo of the biolink model and the neo4j
-        self.types = ['gene','gene_family','gene_product','chemical_substance','anatomical_entity',
-                      'cellular_component','cell','disease','phenotypic_feature','organism_taxon',
-                      'disease_or_phenotypic_feature','biological_process','molecular_activity',
-                      'biological_process_or_activity','food','pathway','sequence_variant']
+        #self.types = ['gene','gene_family','gene_product','chemical_substance','anatomical_entity',
+        #              'cellular_component','cell','disease','phenotypic_feature','organism_taxon',
+        #              'disease_or_phenotypic_feature','biological_process','molecular_activity',
+        #              'biological_process_or_activity','food','pathway','sequence_variant']
+        self.types = ['gene', 'sequence_variant']
         self.one_hops = self.read_one_hops()
 
 
@@ -50,7 +51,7 @@ class ExpansionManagement:
                        AND NOT b:Concept
                        RETURN DISTINCT a.id as a,type(x) as x,
                               b.id as b,labels(a) as la,labels(b) as lb
-                       ORDER BY a.id, b.id '''
+                        '''
                 data = self.query(q)
                 if len(data) > 0:
                     with open(f'data/dump.{source}.{target}.txt','w') as outf:
