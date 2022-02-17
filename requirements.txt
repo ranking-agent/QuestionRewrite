@@ -1,6 +1,6 @@
 Jinja2
 jsonschema
-sanic==19.12.2
+sanic==20.12.6
 swagger-ui-bundle
 pyyaml
 argparse
