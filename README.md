@@ -1,3 +1,5 @@
+# ARCHIVED: This repo is outdated and query expansion has been incorporated into the Aragorn repo.
+
 [![Build Status](https://travis-ci.com/TranslatorIIPrototypes/QuestionRewrite.svg?branch=master)](https://travis-ci.com/TranslatorIIPrototypes/QuestionRewrite)
 
 # Question Augmentation
